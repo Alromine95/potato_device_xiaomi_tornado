@@ -77,6 +77,9 @@ on post-fs
     chmod 0662 /dev/miev
     restorecon /dev/miev
 
+    restorecon /mnt/vendor/persist
+    restorecon_recursive /mnt/vendor/persist
+
     #sensor Start
     mkdir /mnt/vendor/persist/sensors 0755 system system
     #sensor End

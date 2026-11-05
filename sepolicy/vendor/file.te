@@ -8,3 +8,12 @@ type camera_persist_file, file_type;
 # Battery
 type sysfs_battery, fs_type, sysfs_type;
 type sysfs_battery_writable, fs_type, sysfs_type;
+
+# DT2W
+type xiaomi_touch_device, dev_type;
+
+#GED
+type sysfs_ged, sysfs_type, fs_type;
+
+# Rescue block device
+type rescue_block_device, dev_type;
