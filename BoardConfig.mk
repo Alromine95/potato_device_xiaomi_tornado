@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/xiaomi/air
-KERNEL_PATH := device/xiaomi/air-kernel
+DEVICE_PATH := device/xiaomi/tornado
+KERNEL_PATH := device/xiaomi/tornado-kernel
 
 # Enable 64-bit for non-zygote.
 ZYGOTE_FORCE_64 := true
@@ -47,29 +47,30 @@ DEX_PREOPT_DEFAULT := generate-vdex-and-image
 WITH_DEXPREOPT_DEBUG_INFO := false
 
 # Asserts
-TARGET_OTA_ASSERT_DEVICE := air
+TARGET_OTA_ASSERT_DEVICE := tornado
 
 # Boot image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_INIT_BOOT_HEADER_VERSION := 4
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
-BOARD_KERNEL_IMAGE_NAME := Image.gz
+BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 
-BOARD_KERNEL_CMDLINE += bootopt=64S3,32N2,64N2
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += rcupdate.rcu_expedited=1 rcu_nocbs=all rcutree.enable_rcu_lazy
 BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
-BOARD_KERNEL_CMDLINE +=  cgroup_disable=memory
+BOARD_KERNEL_CMDLINE += cgroup_disable=memory
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
-BOARD_DTB_OFFSET := 0x47c80000
-BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_OFFSET := 0x40000000
-BOARD_KERNEL_PAGESIZE := 0x00001000
-BOARD_KERNEL_TAGS_OFFSET := 0x47c80000
-BOARD_RAMDISK_OFFSET := 0x66f00000
+BOARD_DTB_OFFSET := 0x07c88000
+BOARD_KERNEL_BASE := 0x3fff8000
+BOARD_KERNEL_OFFSET := 0x00008000
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_TAGS_OFFSET := 0x07c88000
+BOARD_RAMDISK_OFFSET := 0x26f08000
 
 BOARD_MKBOOTIMG_ARGS := --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
@@ -82,7 +83,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 
 # Kernel
-TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image.gz
+TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image
 PRODUCT_COPY_FILES += \
     $(TARGET_PREBUILT_KERNEL):kernel
 
@@ -93,7 +94,7 @@ TARGET_KERNEL_CLANG_PATH := $(abspath .)/prebuilts/clang/host/linux-x86/clang-$(
 TARGET_NO_KERNEL_OVERRIDE := true
 
 # Workaround to make lineage's soong generator work
-TARGET_KERNEL_SOURCE := device/xiaomi/air-kernel/kernel-headers
+TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
 
 # Board Info
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
@@ -104,15 +105,22 @@ BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(BOARD_PREBUILT_DTBIMAGE_DIR)/mt6835.dtb
 
 # Kernel modules
-BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/vendor/*.ko)
+BOARD_SYSTEM_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/system_dlkm/*.ko)
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/modules.load.system))
+
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/vendor_dlkm/*.ko)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/modules.load.vendor))
+BOARD_DO_NOT_STRIP_VENDOR_MODULES := true
+
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/vendor_ramdisk/*.ko)
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/modules.load.vendor_ramdisk))
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/modules.load.recovery))
+BOARD_DO_NOT_STRIP_VENDOR_RAMDISK_MODULES := true
+
 BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD) $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := air
+TARGET_BOOTLOADER_BOARD_NAME := tornado
 TARGET_NO_BOOTLOADER := true
 
 # Display
@@ -124,10 +132,11 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_DTBOIMG_PARTITION_SIZE := 8388608
 BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
-BOARD_SUPER_PARTITION_SIZE := 7516192768
+BOARD_SUPER_PARTITION_SIZE := 9653190656
 
-BOARD_SUPER_PARTITION_GROUPS := mediatek_dynamic_partitions
-BOARD_MEDIATEK_DYNAMIC_PARTITIONS_PARTITION_LIST += \
+BOARD_SUPER_PARTITION_GROUPS := xiaomi_dynamic_partitions
+BOARD_XIAOMI_DYNAMIC_PARTITIONS_SIZE := 9648996352
+BOARD_XIAOMI_DYNAMIC_PARTITIONS_PARTITION_LIST += \
     odm \
     odm_dlkm \
     product \
@@ -136,8 +145,6 @@ BOARD_MEDIATEK_DYNAMIC_PARTITIONS_PARTITION_LIST += \
     system_ext \
     vendor \
     vendor_dlkm
-
-BOARD_MEDIATEK_DYNAMIC_PARTITIONS_SIZE := 7515140094
 
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ODM_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -183,8 +190,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 ENABLE_VENDOR_RIL_SERVICE := true
 
 # SPL
-BOOT_SECURITY_PATCH := 2026-03-05
-VENDOR_SECURITY_PATCH := 2026-03-05
+BOOT_SECURITY_PATCH := 2026-06-05
+VENDOR_SECURITY_PATCH := 2026-06-05
 
 # SELinux
 include device/mediatek/sepolicy_vndr/SEPolicy.mk
@@ -220,6 +227,7 @@ BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX_LOCATION := 4
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
+    $(DEVICE_PATH)/framework_matrix.xml \
     hardware/mediatek/vintf/mediatek_framework_compatibility_matrix.xml \
     hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml
 
@@ -243,5 +251,4 @@ WIFI_HIDL_FEATURE_AWARE := true
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 
 # Inherit the proprietary files
-include vendor/xiaomi/air/BoardConfigVendor.mk
--include device/xiaomi/air-miuicamera/BoardConfig.mk
+include vendor/xiaomi/tornado/BoardConfigVendor.mk

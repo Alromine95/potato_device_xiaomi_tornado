@@ -17,3 +17,6 @@ type sysfs_ged, sysfs_type, fs_type;
 
 # Rescue block device
 type rescue_block_device, dev_type;
+
+# Tornado specific additions
+type vendor_sysfs_displayfeature, fs_type, sysfs_type;

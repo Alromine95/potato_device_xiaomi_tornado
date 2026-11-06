@@ -15,7 +15,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Inherit common MediaTek IMS
 $(call inherit-product, vendor/mediatek/ims/ims.mk)
 
-DEVICE_PATH := device/xiaomi/air
+DEVICE_PATH := device/xiaomi/tornado
 
 # Linker config
 PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
@@ -202,6 +202,8 @@ PRODUCT_PACKAGES += \
     init.mtkgki.rc \
     init.project.rc \
     init.sensor_2_0.rc \
+    init.batterysecret.rc \
+    init.fingerprint.rc \
     ueventd.mt6835.rc
 
 PRODUCT_PACKAGES += \
@@ -222,12 +224,12 @@ PRODUCT_COPY_FILES += \
 
 # Overlays
 PRODUCT_PACKAGES += \
-    FrameworksResOverlayAir \
-    SettingsResOverlayAir \
-    SystemUIOverlayAir \
-    TetheringConfigOverlayAir \
-    WifiOverlayAir \
-    DeviceAsWebcamOverlayAir \
+    FrameworksResOverlayTornado \
+    SettingsResOverlayTornado \
+    SystemUIOverlayTornado \
+    TetheringOverlayTornado \
+    WifiOverlayTornado \
+    DeviceAsWebcamOverlayTornado \
     NcmTetheringOverlay
 
 PRODUCT_PACKAGE_OVERLAYS += \
@@ -237,7 +239,8 @@ PRODUCT_ENFORCE_RRO_TARGETS := *
 
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/keylayout/,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout)
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/keylayout/,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout) \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/idc/,$(TARGET_COPY_OUT_VENDOR)/usr/idc)
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -386,5 +389,5 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml
 
 # Inherit the proprietary files
-$(call inherit-product, vendor/xiaomi/air/air-vendor.mk)
-$(call inherit-product-if-exists, device/xiaomi/air-miuicamera/device.mk)
+$(call inherit-product, vendor/xiaomi/tornado/tornado-vendor.mk)
+
