@@ -1,11 +1,4 @@
 on init
-
-    # Configure governor settings for little cluster
-    write /sys/devices/system/cpu/cpufreq/policy0/scaling_governor "schedutil"
-
-    # Configure governor settings for big cluster
-    write /sys/devices/system/cpu/cpufreq/policy6/scaling_governor "schedutil"
-
     # Setup final cpuset
     write /dev/cpuset/foreground/cpus 0-5,7
     write /dev/cpuset/foreground_window/cpus 0-5,7
@@ -14,8 +7,8 @@ on init
     write /dev/cpuset/top-app/cpus 0-7
     write /dev/cpuset/restricted/cpus 0-3
 
-    setprop dalvik.vm.dex2oat-cpu-set 2,3,4,5
-    setprop dalvik.vm.dex2oat-threads 4
+    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,6
+    setprop dalvik.vm.dex2oat-threads 6
 
     # VM Tweaks
     write /proc/sys/vm/dirty_writeback_centisecs 300
@@ -51,7 +44,7 @@ on init
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
     write /dev/cpuctl/system-background/cpu.uclamp.latency_sensitive 0
     write /dev/cpuctl/background/cpu.shares 1024
-    write /dev/cpuctl/system-background/cpu.shares 512
+    write /dev/cpuctl/system-background/cpu.shares 2048
     write /dev/cpuctl/background/cpu.uclamp.min 0
     write /dev/cpuctl/background/cpu.uclamp.max 30
     write /dev/cpuctl/system-background/cpu.uclamp.min 1
@@ -67,7 +60,7 @@ on init
     write /dev/cpuctl/dex2oat/cpu.uclamp.latency_sensitive 0
     write /dev/cpuctl/dex2oat/cpu.uclamp.max 60
     write /dev/cpuctl/dex2oat/cpu.uclamp.min 0
-    write /dev/cpuctl/dex2oat/cpu.shares 512
+    write /dev/cpuctl/dex2oat/cpu.shares 2048
 
     # Foreground tasks
     write /dev/cpuctl/foreground/cpu.uclamp.latency_sensitive 1

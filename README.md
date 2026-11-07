@@ -1,4 +1,4 @@
-# AOSP Device Tree for the Redmi 15C 5G / 17C 5G / POCO C85 5G (tornado)
+# AOSP Device Tree for the Redmi 14C 5G / POCO M7 5G (tornado)
 
 ```
 #

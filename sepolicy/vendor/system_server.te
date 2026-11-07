@@ -1,2 +1,0 @@
-allow system_server sysfs_fs_chg_file:file r_file_perms;
-get_prop(system_server, vendor_mi_prop)

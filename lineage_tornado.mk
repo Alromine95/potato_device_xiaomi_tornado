@@ -1,5 +1,6 @@
 #
-# SPDX-FileCopyrightText: The LineageOS Project
+# Copyright (C) 2026 The LineageOS Project
+#
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -17,14 +18,8 @@ PRODUCT_NAME := lineage_tornado
 PRODUCT_DEVICE := tornado
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_BRAND := Redmi
-PRODUCT_MODEL := 2607FRNEAG
-
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="tornado_global-user 16 BP2A.250605.031.A3 OS3.0.305.0.WPOMIXM release-keys" \
-    BuildFingerprint=Redmi/tornado_r_global/tornado:16/BP2A.250605.031.A3/OS3.0.305.0.WPOMIXM:user/release-keys
+PRODUCT_MODEL := Redmi 14C 5G
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-TARGET_INCLUDE_ACCORD := true
-TARGET_INCLUDE_VIPERFX := true
-TARGET_ENABLE_BLUR := true
+BUILD_FINGERPRINT := Xiaomi/tornado/missi:16/BP2A.250605.031.A3/OS3.0.305.0.WPOMIXM:user/release-keys

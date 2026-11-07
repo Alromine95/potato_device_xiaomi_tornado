@@ -1,4 +1,1 @@
-type goodix_fingerprint_hwservice, hwservice_manager_type;
-
-# Tornado specific additions
 type hal_micharge_hwservice, hwservice_manager_type;

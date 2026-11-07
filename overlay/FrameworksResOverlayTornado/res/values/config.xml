@@ -351,10 +351,6 @@
          that can be set by the user. -->
     <item name="config_screenBrightnessDimFloat" format="float" type="dimen">8.54597E-4</item>
 
-    <!-- The maximum range of gamma adjustment possible using the screen
-         auto-brightness adjustment setting. -->
-    <fraction name="config_autoBrightnessAdjustmentMaxGamma">100.0%</fraction>
-
     <!-- Indicate whether to allow the device to suspend when the screen is off
          due to the proximity sensor.  This resource should only be set to true
          if the sensor HAL correctly handles the proximity sensor as a wake-up source.
@@ -447,56 +443,4 @@
          * The device must be provisioned with HDCP keys (for protected content).
     -->
     <bool name="config_enableWifiDisplay">true</bool>
-
-    <!-- Whether WM DisplayContent supports high performance transitions
-         (lower-end devices may want to disable) -->
-    <bool name="config_deviceSupportsHighPerfTransitions">false</bool>
-
-    <!-- Whether device supports OEM fast charge -->
-    <string-array name="config_oemFastChargerStatusPaths" translatable="false">
-         <item>/sys/devices/platform/charger/fast_chg_indicator;4</item>
-    </string-array>
-
-    <!-- Flag indicating whether the surface flinger has limited
-         alpha compositing functionality in hardware.  If set, the window
-         manager will disable alpha trasformation in animations where not
-         strictly needed. -->
-    <bool name="config_sf_limitedAlpha">true</bool>
-
-    <!-- Control whether Night display is available. This should only be enabled
-         on devices  that have a HWC implementation that can apply the matrix passed to
-         setColorTransform without impacting power, performance, and app
-         compatibility (e.g. protected content). -->
-    <bool name="config_nightDisplayAvailable">true</bool>
-
-    <!-- Minimum color temperature, in Kelvin, supported by Night display. -->
-    <integer name="config_nightDisplayColorTemperatureMin">1800</integer>
-
-    <!-- Default color temperature, in Kelvin, to tint the screen when Night
-         display is activated. -->
-    <integer name="config_nightDisplayColorTemperatureDefault">3339</integer>
-
-    <!-- Maximum color temperature, in Kelvin, supported by Night display.
-         Setting this to track the default color temperature value (currently
-         6500K). -->
-    <integer name="config_nightDisplayColorTemperatureMax">6500</integer>
-
-    <!-- Night display color temperature calibration -->
-    <string-array name="config_nightDisplayColorTemperatureCoefficients">
-        <!-- R a-coefficient --> <item>0.0</item>
-        <!-- R b-coefficient --> <item>0.0</item>
-        <!-- R y-intercept --> <item>1.0</item>
-        <!-- G a-coefficient --> <item>-0.000000014365268757</item>
-        <!-- G b-coefficient --> <item>0.000255092801250106</item>
-        <!-- G y-intercept --> <item>-0.064156942434907716</item>
-        <!-- B a-coefficient --> <item>-0.000000000910931179</item>
-        <!-- B b-coefficient --> <item>0.000207598323269139</item>
-        <!-- B y-intercept --> <item>-0.349361641294833436</item>
-    </string-array>
-
-    <!-- The amount to scale fullscreen snapshots for Overview and snapshot starting windows. -->
-    <item name="config_highResTaskSnapshotScale" format="float" type="dimen">0.7</item>
-
-    <!-- Bytes that the PinnerService will pin for WebView -->
-    <integer name="config_pinnerWebviewPinBytes">20971520</integer>
 </resources>

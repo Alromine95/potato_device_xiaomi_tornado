@@ -1,5 +1,1 @@
-vendor.goodix.hardware.biometrics.fingerprint::IGoodixFingerprintDaemon      u:object_r:goodix_fingerprint_hwservice:s0
-vendor.goodix.hardware.biometrics.fingerprint::IGoodixFingerprintDaemonExt   u:object_r:goodix_fingerprint_hwservice:s0
-
-# Tornado specific additions
 vendor.xiaomi.hardware.micharge::IMiCharge   u:object_r:hal_micharge_hwservice:s0
